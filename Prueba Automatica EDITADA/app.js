@@ -10,8 +10,8 @@ const app = new Vue({
             {id: "4", optimistic: 2, pessimistic: 6,  mostLikely: 4, name: "D", dependsOn: ["2"], weekCost: 8000},
             {id: "5", optimistic: 1, pessimistic: 7,  mostLikely: 4, name: "E", dependsOn: ["3"], weekCost: 35000},
             {id: "6", optimistic: 1, pessimistic: 9,  mostLikely: 2, name: "F", dependsOn: ["3"], weekCost: 50000},
-            // {id: "7", optimistic: 3, pessimistic: 11, mostLikely: 4, name: "G", dependsOn: [4, 5], weekCost: 28000},
-            // {id: "8", optimistic: 1, pessimistic: 3,  mostLikely: 2, name: "H", dependsOn: [6, 7], weekCost: 5000},
+            {id: "7", optimistic: 3, pessimistic: 11, mostLikely: 4, name: "G", dependsOn: [4, 5], weekCost: 28000},
+            {id: "8", optimistic: 1, pessimistic: 3,  mostLikely: 2, name: "H", dependsOn: [6, 7], weekCost: 5000},
         ],
 
         indexList: null,
@@ -21,7 +21,6 @@ const app = new Vue({
         newLike:null,
 
         //poner id en 1
-        newId: 7,
         list:[], //Lista Pert
         dependsOn: [],
         chart: null, //Chart Pert 
@@ -50,35 +49,25 @@ const app = new Vue({
     },
     methods: {
         addActivity: function () {
-           
-            let tempDependencies = this.currentDependencies.map(e=>{return e})
-           
-            if(tempDependencies.length == 0){
-                tempDependencies = null
-            }
-
-            this.activityList.push({
-                id: this.newId++,
+            let activity = {
+                id: this.lastIndex + 1,
                 name: this.newName,
                 optimistic: this.newOp,
                 pessimistic: this.newPes,
                 mostLikely: this.newLike,
-                dependsOn: tempDependencies,
                 weekCost: this.pWeekCost
-            })
+            }
 
-            this.dependencies_Options.push({
-                text: this.newName,
-                value: this.newId-1
-            })
+            tempDependencies = this.currentDependencies
+
+            if(tempDependencies.length != 0){
+                activity.dependsOn = tempDependencies.map(e=>e)
+            }
+
+            this.activityList.push(activity)
+
 
             console.log(this.selected);
-            
-
-           
-            
-            
-
             
         },
         searchActivity(id){
@@ -388,11 +377,17 @@ const app = new Vue({
             }
         }
 
-
-
     },
-    created() {
-        
+    computed: {
+        lastIndex () {
+            let list = this.activityList
+            let number = list[list.length -1].id
+            if(parseInt(number)){
+                return parseInt(number)
+            }else{
+                return list.length -1
+            }
+        }
     },
 })
 
