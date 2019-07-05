@@ -99,7 +99,7 @@
                       <td>{{item.optimistic}}</td>
                       <td>{{item.pessimistic}}</td>
                       <td>{{item.mostLikely}}</td>
-                      <td>{{ (dependencies[item.id] != null && dependencies[item.id].length > 0)?dependencies[item.id].join(', '):''}}</td>
+                      <td>{{ getDependencyNames(item.dependsOn).join(', ')}}</td>
                       <td>{{item.weekCost}}</td>
                       <td>
                         <button @click="deleteActivity(item.id)" class="btn btn-danger">Eliminar</button>

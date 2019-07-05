@@ -389,13 +389,25 @@ const app = new Vue({
             this.newLike = ''
             this.currentDependencies = []
             this.pWeekCost = ''
+        },
+        getDependencyNames(dependecies = []){
+            let list = []
+            if(dependecies != null){
+                for (let index = 0; index < dependecies.length; index++) {
+                    const dependency = dependecies[index];
+                    list.push(this.getNameById(dependency))
+                }
+            }
+            return list
         }
     },
     computed: {
         nextId () {
             let list = this.activityList
 
-            let id =  parseInt( list[list.length - 1].id )
+            let acitivity = list[list.length - 1]
+
+            let id =  (acitivity != null)?parseInt( acitivity.id ):-1
 
             if(id > 0){
                 return id + 1
