@@ -105,7 +105,7 @@ let app = new Vue({
 
                 if(flag){
                     self.lista_Informacion[position] = {
-                        id: self.activityList[position].id,
+                        id: null,
                         name: e.name,
                         duration: e.duration,
                         earliestStart: e.earliestStart,
@@ -113,7 +113,7 @@ let app = new Vue({
                         latestStart: e.latestStart,
                         latestFinish: e.latestFinish,
                         isCritical: e.isCritical,
-                        weekCost: self.activityList[position].weekCost
+                        weekCost: null
                     }
                     position++;
                 }
@@ -135,6 +135,11 @@ let app = new Vue({
                  // a must be equal to b
                  return 0;
                });
+
+            for (let index = 0; index < this.lista_Informacion.length; index++) {
+                self.lista_Informacion[index].id = self.activityList[index].id
+                self.lista_Informacion[index].weekCost = self.activityList[index].weekCost
+            }
         },
         createGrantt(){
 
