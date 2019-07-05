@@ -46,6 +46,11 @@ let app = new Vue({
             // set chartPert data
             this.chartPert.data(this.activityList, "asTable");
 
+
+            
+            // this.chartPert.padding(300, '100px', "-100px" , 0);
+            
+
             // set the title of the chartPert
             this.chartPert.title(`Diagrama PERT/CPM del proyecto ${this.project_Name}`);
 
@@ -87,9 +92,8 @@ let app = new Vue({
 
             // set the chart title to show the duration
             this.expectTime = `Fecha limite de entrega del proyecto ${this.projWeek} semanas.`
-            this.durationTime = `Duración del proyecto ${duration} semanas.`
-            this.probabilityToEnd = `La probabilidad de finalizar el proyecto en ${this.projWeek} 
-            semanas es de ${(probabilityToEnd*100).toFixed(2)}%.`
+            this.durationTime = duration
+            this.probabilityToEnd = (probabilityToEnd*100).toFixed(2)
             
         },
         update_Lista_Informacion(){
