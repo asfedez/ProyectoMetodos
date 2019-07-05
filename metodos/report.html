@@ -13,23 +13,43 @@
     <div class="container" id="app">
 
         
-
+        
         
        
         <div class="jumbotron p-4 p-md-5 text-white rounded bg-info">
-            <h1 class="display-4 p-2 ">Reporte {{project_Name}}</h1>
-            <p class="lead my-2"></p>
-            <p class="lead my-2"></p>
-            <p class="lead my-2"></p>
-            <p class="lead my-2"></p>
-
-
-            <p class="lead my-2"><span class="bold">{{expectTime}} weeks</span></p>
-            <p class="lead my-2"><span class="bold">{{durationTime}} weeks</span></p>
-            <p class="lead my-2"><span class="bold">{{probabilityToEnd}}%</span></p>
-            <p class="lead my-2"><span class="bold">{{cost_Total}}</span></p>
+            <h1 class="display-4 p-2 text-center">Reporte {{project_Name}}</h1>
+            <p class="lead my-2 ml-5">Fecha limite de entrega del proyecto <span class="font-weight-bolder">{{projWeek}} semanas</span></p>
+            <p class="lead my-2 ml-5">Duración del proyecto <span class="font-weight-bolder">{{durationTime}} semanas</span></p>
+            <p class="lead my-2 ml-5">La probabilidad de finalizar el proyecto en <span class="font-weight-bolder">{{projWeek}} semanas</span>
+                es de <span class="font-weight-bolder">{{probabilityToEnd}}%</span>
+            </p>
+            <p class="lead my-2 ml-5">Costo total del proyecto es de <span class="font-weight-bolder">$ {{cost_Total}}</span></p>
            
         </div>
+
+
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Duración en semanas</th>
+                    <th scope="col">Costo por semana</th>
+                    <th scope="col">Costo total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in dataChart" :key="item.id">
+                    <td>{{item.x}}</td>
+                    <td>{{item.duration}}</td>
+                    <td>{{item.weekCost}}</td>
+                    <td>{{item.value}}</td>
+                  </tr>
+                  <tr>
+                        <td colspan="3">Costo Total del Proyecto</td>
+                        <td class="font-weight-bold">${{cost_Total}}</td>
+                  </tr>
+                </tbody>
+              </table>
 
 
         

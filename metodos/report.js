@@ -78,7 +78,7 @@ let app = new Vue({
             console.log('INGRESA', this.dataChart);
             for (let index = 0; index < this.dataChart.length; index++) {
                 
-                project_Total += this.dataChart[index].value
+                this.cost_Total  += this.dataChart[index].value
                 
             }
 
@@ -90,7 +90,7 @@ let app = new Vue({
             this.durationTime = `Duración del proyecto ${duration} semanas.`
             this.probabilityToEnd = `La probabilidad de finalizar el proyecto en ${this.projWeek} 
             semanas es de ${(probabilityToEnd*100).toFixed(2)}%.`
-            this.cost_Total = `Costo total del proyecto es de $${project_Total}.`
+            
         },
         update_Lista_Informacion(){
              //Obtener los detalles de las tareas
