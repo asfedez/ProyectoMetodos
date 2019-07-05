@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="app" > 
+
+      <modal close-btn="Listo" :show="modal.name" @close="modal.name = false">
+        <label for="">Nombre del proyecto</label>
+        <input class="form-control" v-model="project_Name" type="text" placeholder="Digite el nombre"/>
+      </modal>
+
+      <modal close-btn="Listo" :show="modal.time" @close="modal.time = false">
+        <label for="">Fecha limite en semanas</label>
+        <input class="form-control" v-model="projWeek" type="number" min="0" placeholder="Digite las semanas"/>
+      </modal>
+
+      <modal :close-callback="clear" close-btn="Cancelar" :show="modal.activity" @close="modal.activity = false" :callback="addActivity">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col">
+              <label class="" for="name">Nombre de la actividad</label>
+              <input class="form-control" v-model="newName" type="text" placeholder="Nombre"/>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col">
+              <label for="optimista">Tiempo optimista</label>
+              <input class="form-control" v-model="newOp" type="text" placeholder="Tiempo en semanas"/>
+            </div>
+            <div class="col">
+              <label for="pesimista">Tiempo pesimista</label>
+              <input class="form-control" v-model="newPes" type="text" placeholder="Tiempo en semanas"/>
+            </div>
+            <div class="col">
+              <label for="probable">Tiempo probable</label>
+              <input class="form-control" v-model="newLike" type="text" placeholder="Tiempo en semanas"/>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col">
+              <label for="">Predecesores</label>
+              <button class="btn btn-success btn-sm" @click="currentDependencies.push('')">+</button>
+            </div>
+          </div>
+          <div class="row">
+            <template v-for="(value, index) in currentDependencies">
+              <div class="col mb-2">
+                  <select v-model="currentDependencies[index]" class="form-control">
+                      <option v-for="(option, i) in activityList" :value="option.id">
+                        {{ option.name }}
+                      </option>
+                    </select>
+              </div>
+              <div class="w-100" v-if="index%3 == 2"></div>
+            </template>
+          </div>
+          <div class="row mb-4 mt-2">
+            <div class="col">
+              <label for="">Costo por semana</label>
+              <input class="form-control"v-model="pWeekCost" type="text" />
+            </div>
+          </div>
+        </div>
+      </modal>
+
+      <div class="container">
+        <h1>Empresa 3 Patitos </h1>
+        <div class="row">
+          <div class="col">
+              <p>
+                Lista de actividades del proyecto: {{project_Name}} <i v-if="project_Name.trim() == ''" class="text-muted">Debe asignar un nombre</i>
+                <button class="btn btn-primary btn-sm" @click="modal.name = true">Editar nombre</button>
+              </p>
+              <p>
+                  El proyecto debe completarse en: {{projWeek}} semanas
+                  <button class="btn btn-primary btn-sm" @click="modal.time = true">Editar semanas</button>
+              </p>
+              <p>
+                <button class="btn btn-success"  @click="modal.activity = true">Agregar actividad</button>
+              </p>
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Optimista</th>
+                      <th scope="col">Pesimista</th>
+                      <th scope="col">Probable</th>
+                      <th scope="col">Dependencias</th>
+                      <th scope="col">Costo por semana</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in activityList" :key="item.id">
+                      <td>{{item.name}}</td>
+                      <td>{{item.optimistic}}</td>
+                      <td>{{item.pessimistic}}</td>
+                      <td>{{item.mostLikely}}</td>
+                      <td>{{ (dependencies[item.id] != null && dependencies[item.id].length > 0)?dependencies[item.id].join(', '):''}}</td>
+                      <td>{{item.weekCost}}</td>
+                      <td>
+                        <button @click="deleteActivity(item.id)" class="btn btn-danger">Eliminar</button>
+                        <button @click="searchActivity(item.id)" class="btn btn-warning">Actualizar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+              </table>
+              <a @click="saveLocalStorage()" href="report.html" target="_blank"  class="btn btn-primary">Generar reporte</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+
+      
+        
+    </div>
+    
+    <!-- Templates -->
+    <template id="modal">
+        <div class="modal fade show" :class="sClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                    <slot></slot>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close()">{{closeText}}</button>
+                  <button type="button" class="btn btn-primary" v-if="saveBtn" @click="callback(), close()">Guardar cambios</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    </template>
+    <script src="vue.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

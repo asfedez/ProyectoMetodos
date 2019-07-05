@@ -8,3 +8,14 @@
 .anychart-credits{
   display: none;
 }
+
+.modal{
+  top: -100px;
+  transition: top .5s;
+  background: #00000069;
+}
+
+.modal__show{
+  top: 0px;
+  display: block;
+}
