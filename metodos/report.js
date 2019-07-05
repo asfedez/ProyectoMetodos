@@ -270,6 +270,14 @@ let app = new Vue({
         this.activityList = report.activityList
         this.projWeek = report.projWeek
 
+        for (let index = 0; index < report.activityList.length; index++) {
+            const activity = report.activityList[index];
+
+            if (activity.dependsOn != null && activity.dependsOn.length==0) {
+                delete activity.dependsOn
+            }
+            
+        }
 
         this.createPert()
         this.showCriticalPath()
