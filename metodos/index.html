@@ -42,17 +42,28 @@
           <div class="row mb-2">
             <div class="col">
               <label for="">Predecesores</label>
-              <button class="btn btn-success btn-sm" @click="currentDependencies.push('')">+</button>
+              <button class="btn btn-success btn-sm" @click="currentDependencies.push('1')">+</button>
             </div>
           </div>
           <div class="row">
             <template v-for="(value, index) in currentDependencies">
               <div class="col mb-2">
+                <div class="input-group mb-2">
                   <select v-model="currentDependencies[index]" class="form-control">
-                      <option v-for="(option, i) in activityList" :value="option.id">
-                        {{ option.name }}
-                      </option>
-                    </select>
+                    <option v-for="(option, i) in activityList" :value="option.id" v-if="option.name != newName">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                  <div class="input-group-append">
+                    <button 
+                      class="btn btn-outline-danger" 
+                      type="button" 
+                      id="button-addon2"
+                      @click="currentDependencies.splice(index, 1)"
+                      :data-x="index"
+                    >x</button>
+                  </div>
+                </div>
               </div>
               <div class="w-100" v-if="index%3 == 2"></div>
             </template>
@@ -85,10 +96,10 @@
               <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Optimista</th>
-                      <th scope="col">Pesimista</th>
-                      <th scope="col">Probable</th>
+                      <th scope="col">Nombre de actividad</th>
+                      <th scope="col">Tiempo Optimista</th>
+                      <th scope="col">Tiempo Pesimista</th>
+                      <th scope="col">Tiempo Probable</th>
                       <th scope="col">Dependencias</th>
                       <th scope="col">Costo por semana</th>
                       <th scope="col">Acciones</th>
@@ -101,10 +112,10 @@
                       <td>{{item.pessimistic}}</td>
                       <td>{{item.mostLikely}}</td>
                       <td>{{ getDependencyNames(item.dependsOn).join(', ')}}</td>
-                      <td>{{item.weekCost}}</td>
+                      <td>${{item.weekCost}}</td>
                       <td>
-                        <button @click="deleteActivity(item.id)" class="btn btn-danger">Eliminar</button>
-                        <button @click="searchActivity(item.id)" class="btn btn-warning">Actualizar</button>
+                        <button @click="deleteActivity(item.id)" class="btn btn-sm btn-danger">Eliminar</button>
+                        <button @click="searchActivity(item.id)" class="btn btn-sm btn-warning">Actualizar</button>
                       </td>
                     </tr>
                   </tbody>

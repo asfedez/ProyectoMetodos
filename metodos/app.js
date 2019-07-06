@@ -1,3 +1,20 @@
+document.addEventListener('keydown', e=>{
+    if(e.ctrlKey && e.keyCode == 77){
+        app.project_Name = 'Instalación de equipo para control de contaminación atmosférica'
+        app.projWeek = 16
+        app.activityList = [
+            {id: "1", optimistic: 1, pessimistic: 3,  mostLikely: 2, name: "A", weekCost: 5000},
+                {id: "2", optimistic: 2, pessimistic: 4,  mostLikely: 3, name: "B", weekCost: 20000},
+                {id: "3", optimistic: 1, pessimistic: 3,  mostLikely: 2, name: "C", dependsOn: ["1"], weekCost: 15000},
+                {id: "4", optimistic: 2, pessimistic: 6,  mostLikely: 4, name: "D", dependsOn: ["2"], weekCost: 8000},
+                {id: "5", optimistic: 1, pessimistic: 7,  mostLikely: 4, name: "E", dependsOn: ["3"], weekCost: 35000},
+                {id: "6", optimistic: 1, pessimistic: 9,  mostLikely: 2, name: "F", dependsOn: ["3"], weekCost: 50000},
+                {id: "7", optimistic: 3, pessimistic: 11, mostLikely: 4, name: "G", dependsOn: ["4", "5"], weekCost: 28000},
+                {id: "8", optimistic: 1, pessimistic: 3,  mostLikely: 2, name: "H", dependsOn: ["6", "7"], weekCost: 5000},
+        ]
+    }
+})
+
 Vue.component('modal', {
     template: '#modal',
     props: ['show', 'closeBtn', 'callback', 'closeCallback'],

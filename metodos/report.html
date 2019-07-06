@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <div class="container" id="app">
+    <div class="container" id="app" v-cloak>
 
         
         
@@ -41,8 +41,8 @@
                   <tr v-for="item in dataChart" :key="item.id">
                     <td>{{item.x}}</td>
                     <td>{{item.duration}}</td>
-                    <td>{{item.weekCost}}</td>
-                    <td>{{item.value}}</td>
+                    <td>${{item.weekCost}}</td>
+                    <td>${{item.value}}</td>
                   </tr>
                   <tr>
                         <td colspan="3">Costo Total del Proyecto</td>
